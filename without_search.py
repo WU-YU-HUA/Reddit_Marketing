@@ -1,28 +1,14 @@
-from utilize import encrypt
+from utilize import encrypt, run_bat
 import requests
 from bs4 import BeautifulSoup
 import csv
 import threading
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-import os
-import subprocess
 
 event = threading.Event()
 
-def run_bat():
-    #取得當前資料夾
-    current = os.getcwd()
-    chrome_path = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
-    user_data_dir = os.path.join(current, "google")
-    #建立google資料夾
-    os.makedirs(user_data_dir, exist_ok=True)
-    port = 8888
-    cmd = f'"{chrome_path}" --remote-debugging-port={port} --user-data-dir="{user_data_dir}"'
-    subprocess.run(cmd, shell=False)
-
 def back_work(social, time, sorted):
-    run_bat()
     url = f"https://www.reddit.com/r/{social}/{sorted}/?t={time}"
     option = Options()
     option.add_experimental_option("debuggerAddress", f"127.0.0.1:{8888}")
@@ -69,8 +55,9 @@ titles = []
 social = input("Plz Enter Social Name (e.g. OLED_Gaming): ")
 time = input("Plz Enter SortedTime (e.g. day): ")
 sorted = input("Plz Enter Sorted (e.g. top, best): ")
-
-#小互動
+#設定Google
+run_bat()
+#互動
 thread = threading.Thread(target=back_work, args=(social, time, sorted))
 thread.start()
 #主程式
