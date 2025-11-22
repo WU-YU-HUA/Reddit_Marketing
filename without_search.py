@@ -1,4 +1,4 @@
-from utilize import encrypt, run_bat
+from utilize import encrypt, run_bat, make_xlsx
 import requests
 from bs4 import BeautifulSoup
 import csv
@@ -66,7 +66,4 @@ without(socialName=social, time=time, sorted=sorted)
 event.set()
 thread.join()
 
-with open(f"{social}_{time}_{sorted}.csv", "w", newline="", encoding='utf-8') as f:
-    writer = csv.writer(f)
-    for title in titles:
-        writer.writerow([title])
+make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}.xlsx")

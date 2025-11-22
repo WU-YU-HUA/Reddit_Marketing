@@ -1,4 +1,4 @@
-from utilize import run_bat
+from utilize import run_bat, make_xlsx
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 import time as timesleep
@@ -42,7 +42,4 @@ run_bat()
 #開始執行
 with_keyword(social, time, sorted, keyword)
 
-with open(f"{social}_{time}_{sorted}_with_{keyword}.csv", "w", newline="", encoding='utf-8') as f:
-    writer = csv.writer(f)
-    for title in titles:
-        writer.writerow([title])
+make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}_with_{keyword}.xlsx")

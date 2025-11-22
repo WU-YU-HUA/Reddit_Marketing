@@ -1,6 +1,7 @@
 import base64
 import os
 import subprocess
+from  openpyxl import Workbook
 
 def encrypt(input: str):
     return base64.b64encode(input.encode("utf-8")).decode('utf-8')
@@ -16,4 +17,12 @@ def run_bat():
     #建立google資料夾
     os.makedirs(user_data_dir, exist_ok=True)
     p = subprocess.Popen(cmd, shell=False)
-      
+
+def make_xlsx(titles: list, filename: str):
+    wb = Workbook()
+    ws = wb.active
+
+    for title in titles:
+        ws.append([title])
+
+    wb.save(filename)
