@@ -1,12 +1,12 @@
 from utilize import encrypt, run_bat, make_xlsx
 import requests
 from bs4 import BeautifulSoup
-import csv
 import threading
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
 event = threading.Event()
+titles = []
 
 def back_work(social, time, sorted):
     url = f"https://www.reddit.com/r/{social}/{sorted}/?t={time}"
@@ -51,19 +51,14 @@ def without(socialName, time, sorted, after=""):
     else:
         return
 
-titles = []
-social = input("Plz Enter Social Name (e.g. OLED_Gaming): ")
-time = input("Plz Enter SortedTime (e.g. day): ")
-sorted = input("Plz Enter Sorted (e.g. top, best): ")
-#設定Google
-run_bat()
-#互動
-thread = threading.Thread(target=back_work, args=(social, time, sorted))
-thread.start()
-#主程式
-without(socialName=social, time=time, sorted=sorted)
-#結束停止
-event.set()
-thread.join()
+def without_main(social, time, sorted):
+    #互動
+    thread = threading.Thread(target=back_work, args=(social, time, sorted))
+    thread.start()
+    #主程式
+    without(socialName=social, time=time, sorted=sorted)
+    #結束停止
+    event.set()
+    thread.join()
 
-make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}.xlsx")
+    make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}.xlsx")

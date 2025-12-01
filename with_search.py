@@ -3,7 +3,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 import time as timesleep
 from bs4 import BeautifulSoup
-import csv
+
+titles = []
 
 def with_keyword(social="OLED_Gaming", time="month", sorted="top", keyword="GIGABYTE"):
     url = f"https://www.reddit.com/r/{social}/search/?q={keyword}&sort={sorted}&t={time}"
@@ -31,15 +32,8 @@ def with_keyword(social="OLED_Gaming", time="month", sorted="top", keyword="GIGA
             titles.append(title)
     # driver.close()
 
-titles = []
-social = input("Plz Enter Social Name (e.g. OLED_Gaming): ")
-time = input("Plz Enter SortedTime (e.g. day): ")
-sorted = input("Plz Enter Sorted (e.g. top, best): ")
-keyword = input("Plz Enter Keyword you want: ")
+def with_main(social="OLED_Gaming", time="month", sorted="top", keyword="GIGABYTE"):
+    #開始執行
+    with_keyword(social, time, sorted, keyword)
 
-#設定Google
-run_bat()
-#開始執行
-with_keyword(social, time, sorted, keyword)
-
-make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}_with_{keyword}.xlsx")
+    make_xlsx(titles=titles, filename=f"{social}_{time}_{sorted}_with_{keyword}.xlsx")
