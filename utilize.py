@@ -2,6 +2,9 @@ import base64
 import os
 import subprocess
 from  openpyxl import Workbook
+import requests
+from bs4 import BeautifulSoup
+import time
 
 def encrypt(input: str):
     return base64.b64encode(input.encode("utf-8")).decode('utf-8')
@@ -23,6 +26,30 @@ def make_xlsx(titles: list, filename: str):
     ws = wb.active
 
     for title in titles:
-        ws.append([title])
+        if int(title[1]) > 0 or title[2] != "":
+            ws.append(title)
 
     wb.save(filename)
+
+def get_upvote_content(url):
+    full_url = f"https://www.reddit.com{url}"
+    res = requests.get(full_url, headers={
+        "User-Agent": "Mozilla/5.0"
+    })
+
+    soup = BeautifulSoup(res.text, 'html.parser')
+    body = soup.find('shreddit-post-text-body')
+    if body:
+        body = body.find('p')
+        if body:
+            body = body.text.strip()
+    if body is None:
+        body = ""
+        
+    upvote = soup.find("shreddit-post", attrs={"score": True})
+    if upvote:
+        upvote = upvote.get('score')
+    else:
+        upvote = 0
+    time.sleep(1)
+    return upvote, body
