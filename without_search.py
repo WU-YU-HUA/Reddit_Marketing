@@ -5,6 +5,7 @@ import threading
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import datetime
+import time as timesleep
 
 event = threading.Event()
 titles = []

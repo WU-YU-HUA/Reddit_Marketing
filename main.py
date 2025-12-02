@@ -5,10 +5,10 @@ import threading
 
 event = threading.Event()
 titles = []
-social = input("Plz Enter Param1: ") #Plz Enter Social Name (e.g. OLED_Gaming): 
-time = input("Plz Enter Param2: ") #Plz Enter SortedTime (e.g. day): 
-sorted = input("Plz Enter Param3: ") #Plz Enter Sorted (e.g. top, best): 
-keyword = input("Plz Enter Param4: ") #Plz Enter Keyword you want: 
+social = input("Please Enter Parameter1: ") #Plz Enter Social Name (e.g. OLED_Gaming): 
+time = input("Please Enter Parameter2: ") #Plz Enter SortedTime (e.g. day): 
+sorted = input("Please Enter Parameter3: ") #Plz Enter Sorted (e.g. top, best): 
+keyword = input("Please Enter Parameter4: ") #Plz Enter Keyword you want: 
 
 run_bat()
 
